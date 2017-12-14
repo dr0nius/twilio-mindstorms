@@ -151,17 +151,17 @@ One last thing is needed to make our droid controller fully functional. Twilio a
 
 In order for the token generator to apply a valid signature, we will also need an API signing key.
 
-- Navigate to [Sync Tools](https://www.twilio.com/console/sync/tools) console and click “Create new API Key”.
-- Friendly name: type “Droid controller key”.
-- Key type: leave as “Standard”.
+- Navigate to [Sync Tools](https://www.twilio.com/console/sync/tools) console and click "Create new API Key".
+- Friendly name: type "Droid controller key".
+- Key type: leave as "Standard".
 - Note the resulting SID and Secret fields, we are going to need to use them in the token generator.
 
 ![Create Sync API Key](images/create-key.png)
 
 - Navigate to [Functions Configuration](https://www.twilio.com/console/runtime/functions/configure) console.
-- Under “Environment Variables”, click the “(+)” button and set “TWILIO_API_KEY” as the name. Copy & paste API key SID from the earlier step as its value.
-- Add another variable called “TWILIO_API_SECRET” and copy & paste API key secret as its value.
-- Click “Save” and observe a confirming toast notification.
+- Under "Environment Variables", click the "(+)" button and set "TWILIO_API_KEY" as the name. Copy & paste API key SID from the earlier step as its value.
+- Add another variable called "TWILIO_API_SECRET" and copy & paste API key secret as its value.
+- Click "Save" and observe a confirming toast notification.
 
 ![Function with Sync Token Generator](images/function-configuration.png)
 
@@ -174,7 +174,7 @@ Finally, let’s put all the components together and make the ultimate test run.
        $ python3 client.py
        Connected with result code 0
 
-3. Now, press and hold in the “Control stick pad” area to drive your droid around. Observe the proximity gauge to change if there is an obstacle in front of it. It also works with a trackpad or touchscreen device, open it on your phone and observe motor and sensor states changing live in all applications.
+3. Now, press and hold in the "Control stick pad" area to drive your droid around. Observe the proximity gauge to change if there is an obstacle in front of it. It also works with a trackpad or touchscreen device, open it on your phone and observe motor and sensor states changing live in all applications.
 
 ![In-Browser Droid Controller Application](images/browser-control.png)
 
@@ -183,7 +183,7 @@ Finally, let’s put all the components together and make the ultimate test run.
 This particular project addresses generic remote control and dashboarding scenarios, and can be extended further. For example, consider the following tweaks:
 
 - Add the missing color sensor to controller UI and start tracking it live.
-- Add a second “stick” handler to the control pad and pivot droid’s head using multi-touch.
+- Add a second "stick" handler to the control pad and pivot droid’s head using multi-touch.
 - Attach a special trigger to touch sensor and hook it up to another Function using [webhooks](https://www.twilio.com/docs/api/sync/webhooks); make it send an SMS or ring a phone.
 - Deploy a fleet of droids and build a dashboard to monitor them in real time.
 
