@@ -14,7 +14,7 @@
     function getToken() {
       return new Promise((resolve, reject) => {
         const request = window.superagent;
-        $.getJSON('/token', (data) => {
+        $.getJSON('/token', data => {
           console.log('Got token for identity:', data.identity);
           resolve(data.token);
         });
@@ -41,12 +41,12 @@
         })
         .then(c => {
           c.client.document('motors').then(doc => {
-            c.manager.on('tokenUpdated', (am) => {
+            c.manager.on('tokenUpdated', am => {
               console.log('Token updated:', am);
               c.client.updateToken(am.token);
             });
 
-            doc.on('updated', (args) => {
+            doc.on('updated', args => {
               $(".leftMotor").val(-args.value.l1).trigger('change');
               $(".rightMotor").val(-args.value.l2).trigger('change');
             });
@@ -70,13 +70,13 @@
             });
           });
           c.client.stream('sensors').then(stream => {
-            stream.on('messagePublished', (args) => {
+            stream.on('messagePublished', args => {
               console.debug('Sensors:', args.message.value);
               $(".proximity").val(args.message.value.ir).trigger('change');
             });
           });
         })
-        .catch((error) => {
+        .catch(error => {
           console.error("Failed initializing: ", error);
         });
     };
