@@ -28,22 +28,23 @@
       $(".proximity").knob();
 
       getToken()
-        .then((token) => {
+        .then(token => {
 
           let syncClient = new Twilio.Sync.Client(token);
           let accessManager = new Twilio.AccessManager(token);
-          accessManager.on('tokenUpdated', (am) => {
-            syncClient.updateToken(am.token);
-          });
           accessManager.on('tokenExpired', () => {
-            getToken().then((t) => {
+            getToken().then(t => {
               accessManager.updateToken(t);
             });
           });
-          return syncClient;
+          return { client: syncClient, manager: accessManager };
         })
-        .then((client) => {
-          client.document('motors').then((doc) => {
+        .then(c => {
+          c.client.document('motors').then(doc => {
+            c.manager.on('tokenUpdated', (am) => {
+              console.log('Token updated:', am);
+              c.client.updateToken(am.token);
+            });
 
             doc.on('updated', (args) => {
               $(".leftMotor").val(-args.value.l1).trigger('change');
@@ -68,7 +69,7 @@
                 doc.set({ l1: 0, l2: 0 });
             });
           });
-          client.stream('sensors').then((stream) => {
+          c.client.stream('sensors').then(stream => {
             stream.on('messagePublished', (args) => {
               console.debug('Sensors:', args.message.value);
               $(".proximity").val(args.message.value.ir).trigger('change');
